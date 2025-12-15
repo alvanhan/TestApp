@@ -1,0 +1,32 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(20) UNIQUE,
+    password VARCHAR(255),
+    name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price INTEGER NOT NULL,
+    stock INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+    total_amount INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS sequences (
+    name VARCHAR(50) PRIMARY KEY,
+    current_val INTEGER DEFAULT 0
+);
+
+INSERT INTO sequences (name, current_val) VALUES ('order_seq', 0) ON CONFLICT DO NOTHING;
