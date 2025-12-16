@@ -5,6 +5,6 @@ export const startScheduler = () => {
 
     cron.schedule('* * * * *', () => {
         const now = new Date().toISOString();
-        console.log(`[Penjadwal Tugas] Menjalankan pemeliharaan latar belakang pada ${now}...`);
+        console.log(`[Cron Job] Menjalankan background job pada ${now}...`);
     });
 };
